@@ -60,6 +60,16 @@ if (empty($_ENV['JWT_SECRET'])) {
 
 $router = new Router();
 
+// Build controllers on first use, so routes like /health don't need a
+// database connection and each request only constructs what it touches.
+$lazy = static function (string $class, string $method): callable {
+    return static function (...$args) use ($class, $method) {
+        static $instances = [];
+        $instances[$class] ??= new $class();
+        return $instances[$class]->$method(...$args);
+    };
+};
+
 $router->get('/', static function (): void {
     ApiResponse::success([
         'service' => 'book-ecommerce-server',
@@ -67,19 +77,6 @@ $router->get('/', static function (): void {
         'health' => '/health',
     ]);
 });
-
-$bookController = new BookController();
-$bookReviewController = new BookReviewController();
-$customerController = new CustomerController();
-$adminController = new AdminController();
-$authorsController = new AuthorsController();
-$bookCategoriesController = new BookCategoriesController();
-$cartController = new CartController();
-$invoiceController = new InvoiceController();
-$authController = new AuthController();
-$inventoryController = new InventoryController();
-$promotionController = new PromotionController();
-$returnController = new ReturnController();
 
 $router->get('/health', static function (): void {
     ApiResponse::success([
@@ -90,66 +87,66 @@ $router->get('/health', static function (): void {
     ]);
 });
 
-$router->get('/auth/me', [$authController, 'me']);
-$router->post('/auth/refresh', [$authController, 'refresh']);
-$router->post('/auth/logout', [$authController, 'logout']);
+$router->get('/auth/me', $lazy(AuthController::class, 'me'));
+$router->post('/auth/refresh', $lazy(AuthController::class, 'refresh'));
+$router->post('/auth/logout', $lazy(AuthController::class, 'logout'));
 
-$router->get('/books', [$bookController, 'index']);
-$router->get('/books/{id}', [$bookController, 'show']);
-$router->get('/books/{id}/reviews', [$bookReviewController, 'index']);
-$router->post('/books/{id}/reviews', [$bookReviewController, 'store']);
-$router->post('/books', [$bookController, 'save']);
-$router->put('/books/{id}', [$bookController, 'update']);
-$router->delete('/books/{id}', [$bookController, 'delete']);
-$router->get('/bookprice', [$bookController, 'getBookPrice']);
-$router->get('/books/countbook', [$bookController, 'countBooks']);
-$router->get('/books/new-arrivals', [$bookController, 'newArrivals']);
-$router->get('/books/best-sellers', [$bookController, 'bestSellers']);
-$router->get('/authors', [$authorsController, 'index']);
-$router->post('/authors', [$authorsController, 'store']);
-$router->put('/authors/{id}', [$authorsController, 'update']);
-$router->delete('/authors/{id}', [$authorsController, 'delete']);
+$router->get('/books', $lazy(BookController::class, 'index'));
+$router->get('/books/{id}', $lazy(BookController::class, 'show'));
+$router->get('/books/{id}/reviews', $lazy(BookReviewController::class, 'index'));
+$router->post('/books/{id}/reviews', $lazy(BookReviewController::class, 'store'));
+$router->post('/books', $lazy(BookController::class, 'save'));
+$router->put('/books/{id}', $lazy(BookController::class, 'update'));
+$router->delete('/books/{id}', $lazy(BookController::class, 'delete'));
+$router->get('/bookprice', $lazy(BookController::class, 'getBookPrice'));
+$router->get('/books/countbook', $lazy(BookController::class, 'countBooks'));
+$router->get('/books/new-arrivals', $lazy(BookController::class, 'newArrivals'));
+$router->get('/books/best-sellers', $lazy(BookController::class, 'bestSellers'));
+$router->get('/authors', $lazy(AuthorsController::class, 'index'));
+$router->post('/authors', $lazy(AuthorsController::class, 'store'));
+$router->put('/authors/{id}', $lazy(AuthorsController::class, 'update'));
+$router->delete('/authors/{id}', $lazy(AuthorsController::class, 'delete'));
 
-$router->get('/customers', [$customerController, 'index']);
-$router->get('/customers/{id}', [$customerController, 'show']);
-$router->post('/customers/register', [$customerController, 'store']);
-$router->post('/customers/login', [$customerController, 'login']);
-$router->put('/customers/{id}', [$customerController, 'update']);
-$router->delete('/customers/{id}', [$customerController, 'delete']);
-$router->post('/customers/forgot-password', [$customerController, 'forgotPassword']);
-$router->post('/customers/reset-password', [$customerController, 'resetPassword']);
-$router->get('/customers/count', [$customerController, 'countCustomers']);
+$router->get('/customers', $lazy(CustomerController::class, 'index'));
+$router->get('/customers/{id}', $lazy(CustomerController::class, 'show'));
+$router->post('/customers/register', $lazy(CustomerController::class, 'store'));
+$router->post('/customers/login', $lazy(CustomerController::class, 'login'));
+$router->put('/customers/{id}', $lazy(CustomerController::class, 'update'));
+$router->delete('/customers/{id}', $lazy(CustomerController::class, 'delete'));
+$router->post('/customers/forgot-password', $lazy(CustomerController::class, 'forgotPassword'));
+$router->post('/customers/reset-password', $lazy(CustomerController::class, 'resetPassword'));
+$router->get('/customers/count', $lazy(CustomerController::class, 'countCustomers'));
 
-$router->get('/cart', [$cartController, 'getCart']);
-$router->post('/cart/items', [$cartController, 'addItem']);
-$router->put('/cart/items/{book_id}', [$cartController, 'setItemQuantity']);
-$router->delete('/cart/items/{book_id}', [$cartController, 'removeItem']);
+$router->get('/cart', $lazy(CartController::class, 'getCart'));
+$router->post('/cart/items', $lazy(CartController::class, 'addItem'));
+$router->put('/cart/items/{book_id}', $lazy(CartController::class, 'setItemQuantity'));
+$router->delete('/cart/items/{book_id}', $lazy(CartController::class, 'removeItem'));
 
-$router->post('/cart/checkout', [$invoiceController, 'checkout']);
-$router->post('/cart/checkout-preview', [$invoiceController, 'preview']);
-$router->get('/invoices', [$invoiceController, 'index']);
-$router->get('/invoices/{invoiceId}', [$invoiceController, 'show']);
-$router->post('/invoices/{invoiceId}/returns', [$returnController, 'customerStore']);
-$router->get('/admin/invoices', [$invoiceController, 'adminIndex']);
-$router->put('/admin/invoices/{invoiceId}', [$invoiceController, 'adminUpdate']);
-$router->get('/admin/returns', [$returnController, 'adminIndex']);
-$router->put('/admin/returns/{returnId}', [$returnController, 'adminUpdate']);
-$router->get('/admin/inventory-movements', [$inventoryController, 'index']);
+$router->post('/cart/checkout', $lazy(InvoiceController::class, 'checkout'));
+$router->post('/cart/checkout-preview', $lazy(InvoiceController::class, 'preview'));
+$router->get('/invoices', $lazy(InvoiceController::class, 'index'));
+$router->get('/invoices/{invoiceId}', $lazy(InvoiceController::class, 'show'));
+$router->post('/invoices/{invoiceId}/returns', $lazy(ReturnController::class, 'customerStore'));
+$router->get('/admin/invoices', $lazy(InvoiceController::class, 'adminIndex'));
+$router->put('/admin/invoices/{invoiceId}', $lazy(InvoiceController::class, 'adminUpdate'));
+$router->get('/admin/returns', $lazy(ReturnController::class, 'adminIndex'));
+$router->put('/admin/returns/{returnId}', $lazy(ReturnController::class, 'adminUpdate'));
+$router->get('/admin/inventory-movements', $lazy(InventoryController::class, 'index'));
 
-$router->post('/admin/register', [$adminController, 'store']);
-$router->post('/admin/login', [$adminController, 'login']);
-$router->get('/admin/analytics', [$adminController, 'analytics']);
-$router->get('/admin/customers', [$adminController, 'customers']);
-$router->get('/admin/settings', [$adminController, 'settings']);
-$router->put('/admin/settings', [$adminController, 'updateSettings']);
-$router->get('/admin/promotions', [$promotionController, 'index']);
-$router->post('/admin/promotions', [$promotionController, 'store']);
-$router->put('/admin/promotions/{id}', [$promotionController, 'update']);
-$router->delete('/admin/promotions/{id}', [$promotionController, 'delete']);
-$router->get('/storefront/settings', [$adminController, 'publicSettings']);
-$router->get('/bookcategory', [$bookCategoriesController, 'index']);
-$router->post('/bookcategory', [$bookCategoriesController, 'store']);
-$router->put('/bookcategory/{id}', [$bookCategoriesController, 'update']);
-$router->delete('/bookcategory/{id}', [$bookCategoriesController, 'delete']);
+$router->post('/admin/register', $lazy(AdminController::class, 'store'));
+$router->post('/admin/login', $lazy(AdminController::class, 'login'));
+$router->get('/admin/analytics', $lazy(AdminController::class, 'analytics'));
+$router->get('/admin/customers', $lazy(AdminController::class, 'customers'));
+$router->get('/admin/settings', $lazy(AdminController::class, 'settings'));
+$router->put('/admin/settings', $lazy(AdminController::class, 'updateSettings'));
+$router->get('/admin/promotions', $lazy(PromotionController::class, 'index'));
+$router->post('/admin/promotions', $lazy(PromotionController::class, 'store'));
+$router->put('/admin/promotions/{id}', $lazy(PromotionController::class, 'update'));
+$router->delete('/admin/promotions/{id}', $lazy(PromotionController::class, 'delete'));
+$router->get('/storefront/settings', $lazy(AdminController::class, 'publicSettings'));
+$router->get('/bookcategory', $lazy(BookCategoriesController::class, 'index'));
+$router->post('/bookcategory', $lazy(BookCategoriesController::class, 'store'));
+$router->put('/bookcategory/{id}', $lazy(BookCategoriesController::class, 'update'));
+$router->delete('/bookcategory/{id}', $lazy(BookCategoriesController::class, 'delete'));
 
 $router->dispatch();
