@@ -1,0 +1,196 @@
+{
+    "created_at": "2026-09-24T05:52:31+02:00",
+    "database": "E-bookStore_db",
+    "rows": [
+        {
+            "id": 1,
+            "title": "1984",
+            "book_img": "https://www.penguin.co.uk/_next/image?url=https%3A%2F%2Fcdn.penguin.co.uk%2Fdam-assets%2Fbooks%2F9780141036144%2F9780141036144-jacket-large.jpg&w=614&q=100"
+        },
+        {
+            "id": 2,
+            "title": "Pride and Prejudice",
+            "book_img": "https://readaloudrevival.com/wp-content/uploads/2016/05/Pride-and-Prejudice.png.webp"
+        },
+        {
+            "id": 3,
+            "title": "The Adventures of Tom Sawyer",
+            "book_img": "https://rarebookcellar.cdn.bibliopolis.com/pictures/155287.jpg?width=768&height=1000&fit=bounds&auto=webp&v=1636668481"
+        },
+        {
+            "id": 4,
+            "title": "The Old Man and the Sea",
+            "book_img": "https://backcreekbooks.cdn.bibliopolis.com/pictures/900_1.jpg?width=768&height=1000&fit=bounds&auto=webp&v=1638587226"
+        },
+        {
+            "id": 6,
+            "title": "Crime and Punishment",
+            "book_img": "https://marissasbooks.com/cdn/shop/files/marissasbooksandgifts-9781774021897-crime-punishment-paper-mill-classics-38105402605767.webp?v=1696895342"
+        },
+        {
+            "id": 7,
+            "title": "The Hobbit",
+            "book_img": "https://yesterdaysmuse.cdn.bibliopolis.com/pictures/2341696.jpg?auto=webp&v=1768253579"
+        },
+        {
+            "id": 8,
+            "title": "Murder on the Orient Express",
+            "book_img": "https://yesterdaysmuse.cdn.bibliopolis.com/pictures/2347588.jpg?width=768&height=1000&fit=bounds&auto=webp&v=1738102712"
+        },
+        {
+            "id": 9,
+            "title": "To Kill a Mockingbird",
+            "book_img": "https://i0.wp.com/www.mindfulmuslimreader.com/wp-content/uploads/2022/10/mockingbird-e1666245397419.webp?w=800&ssl=1"
+        },
+        {
+            "id": 10,
+            "title": "Animal Farm",
+            "book_img": "https://www.penguin.co.uk/_next/image?url=https%3A%2F%2Fcdn.penguin.co.uk%2Fdam-assets%2Fbooks%2F9780241391853%2F9780241391853-jacket-large.jpg&w=819&q=100"
+        },
+        {
+            "id": 11,
+            "title": "Sense and Sensibility",
+            "book_img": "https://yesterdaysmuse.cdn.bibliopolis.com/pictures/2350876.jpg?auto=webp&v=1759077225"
+        },
+        {
+            "id": 12,
+            "title": "The Brothers Karamazov",
+            "book_img": "https://jmichaelsbooks.cdn.bibliopolis.com/pictures/902189.jpg?width=768&height=1000&fit=bounds&auto=webp&v=1743611302"
+        },
+        {
+            "id": 13,
+            "title": "Frankenstein",
+            "book_img": "https://rarebookcellar.cdn.bibliopolis.com/pictures/192378.jpg?width=768&height=1000&fit=bounds&auto=webp&v=1742250920"
+        },
+        {
+            "id": 14,
+            "title": "The Hound of the Baskervilles",
+            "book_img": "https://www.versoz.com/cdn/shop/files/M8G1K62N7UOS_Cover_1.jpg?v=1731349650"
+        },
+        {
+            "id": 15,
+            "title": "Harry Potter and the Sorcerer's Stone",
+            "book_img": "https://static-ppimages.freetls.fastly.net/product/9781408855652-1.jpg?canvas=600,600&fit=bounds&height=600&mode=max&width=600&404=default.jpg"
+        },
+        {
+            "id": 16,
+            "title": "Harry Potter and the Chamber of Secrets",
+            "book_img": "https://buybookbook.com/cdn/shop/files/harry-potter-2-and-the-chamber-of-secrets-j_k_-rowling-1.webp?v=1735483194"
+        },
+        {
+            "id": 17,
+            "title": "The Shining",
+            "book_img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2cXzfPrlygDdKr-Ao5-ngmy0B_odHa-_iBw&s"
+        },
+        {
+            "id": 18,
+            "title": "It",
+            "book_img": "it.jpg"
+        },
+        {
+            "id": 19,
+            "title": "Dune",
+            "book_img": "dune.jpg"
+        },
+        {
+            "id": 20,
+            "title": "Slaughterhouse-Five",
+            "book_img": "slaughterhouse_five.jpg"
+        },
+        {
+            "id": 21,
+            "title": "The Alchemist",
+            "book_img": "alchemist.jpg"
+        },
+        {
+            "id": 22,
+            "title": "Sapiens: A Brief History of Humankind",
+            "book_img": "sapiens.jpg"
+        },
+        {
+            "id": 23,
+            "title": "Becoming",
+            "book_img": "becoming.jpg"
+        },
+        {
+            "id": 24,
+            "title": "Atomic Habits",
+            "book_img": "atomic_habits.jpg"
+        },
+        {
+            "id": 25,
+            "title": "Clean Code",
+            "book_img": "clean_code.jpg"
+        },
+        {
+            "id": 26,
+            "title": "The C++ Programming Language",
+            "book_img": "cpp_programming_language.jpg"
+        },
+        {
+            "id": 27,
+            "title": "Norwegian Wood",
+            "book_img": "norwegian_wood.jpg"
+        },
+        {
+            "id": 28,
+            "title": "Kafka on the Shore",
+            "book_img": "kafka_shore.jpg"
+        },
+        {
+            "id": 29,
+            "title": "The Da Vinci Code",
+            "book_img": "da_vinci_code.jpg"
+        },
+        {
+            "id": 30,
+            "title": "Angels & Demons",
+            "book_img": "angels_demons.jpg"
+        },
+        {
+            "id": 31,
+            "title": "The Art of War",
+            "book_img": "art_of_war.jpg"
+        },
+        {
+            "id": 32,
+            "title": "Steve Jobs",
+            "book_img": "https://covers.openlibrary.org/b/olid/OL27193250M-L.jpg"
+        },
+        {
+            "id": 33,
+            "title": "The Lord of the Rings: The Fellowship of the Ring",
+            "book_img": "lotr1.jpg"
+        },
+        {
+            "id": 34,
+            "title": "The Lord of the Rings: The Two Towers",
+            "book_img": "lotr2.jpg"
+        },
+        {
+            "id": 35,
+            "title": "The Lord of the Rings: The Return of the King",
+            "book_img": "lotr3.jpg"
+        },
+        {
+            "id": 36,
+            "title": "And Then There Were None",
+            "book_img": "https://upload.wikimedia.org/wikipedia/commons/9/94/81nChcVy7CL._AC_UF1000%2C1000_QL80.jpg"
+        },
+        {
+            "id": 37,
+            "title": "The Murder of Roger Ackroyd",
+            "book_img": "https://covers.openlibrary.org/b/olid/OL24927382M-L.jpg"
+        },
+        {
+            "id": 38,
+            "title": "Love in the Time of Cholera",
+            "book_img": "https://covers.openlibrary.org/b/olid/OL51478818M-L.jpg"
+        },
+        {
+            "id": 39,
+            "title": "The Grapes of Wrath",
+            "book_img": "https://upload.wikimedia.org/wikipedia/commons/a/ad/The_Grapes_of_Wrath_%281939_1st_ed_cover%29.jpg"
+        }
+    ]
+}
