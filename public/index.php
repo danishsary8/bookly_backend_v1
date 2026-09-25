@@ -21,6 +21,11 @@ use Dotenv\Dotenv;
 
 $dotenv = Dotenv::createImmutable(dirname(__DIR__));
 $dotenv->safeLoad();
+// Hosts like Wasmer inject config as real env vars with no .env file, and
+// $_ENV stays empty unless variables_order includes "E". Mirror them in.
+foreach (getenv() as $key => $value) {
+    $_ENV[$key] ??= $value;
+}
 ErrorHandler::register();
 
 header('Content-Type: application/json');
