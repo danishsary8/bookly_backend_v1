@@ -1,0 +1,9 @@
+kind: wasmer.io/App.v0
+name: book-ecommerce-server
+package: .
+
+# Non-secret config only. Set DB_*, JWT_SECRET, ADMIN_REGISTER_SECRET and
+# MAIL_* with `wasmer app secrets create` — never commit them here.
+env:
+  APP_ENV: production
+  DB_DRIVER: pgsql

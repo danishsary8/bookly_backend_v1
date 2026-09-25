@@ -1,0 +1,17 @@
+[dependencies]
+"php/php" = "=8.3.4"
+
+# Only ship what the API needs at runtime. Mapping the whole repo would bundle
+# .env (with secrets), SQL dumps, logs and debug scripts into the package.
+[fs]
+"/app/public" = "public"
+"/app/app" = "app"
+"/app/vendor" = "vendor"
+
+[[command]]
+name = "run"
+module = "php/php:php"
+runner = "wasi"
+
+[command.annotations.wasi]
+main-args = ["-t", "/app/public", "-S", "localhost:8080"]
