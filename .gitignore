@@ -1,0 +1,6 @@
+.env
+.env.*
+!.env.example
+!.env.production.example
+*.log
+_debug_*.php

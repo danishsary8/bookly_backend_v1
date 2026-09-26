@@ -17,12 +17,26 @@ final class DatabaseConnection
         }
 
         try {
+            $sslMode = strtolower((string)($_ENV['DB_SSLMODE'] ??
+                (($_ENV['APP_ENV'] ?? '') === 'production' ? 'require' : 'prefer')));
+            $channelBinding = strtolower((string)($_ENV['DB_CHANNEL_BINDING'] ?? 'prefer'));
+
+            if (!in_array($sslMode, ['disable', 'allow', 'prefer', 'require', 'verify-ca', 'verify-full'], true)
+                || !in_array($channelBinding, ['disable', 'prefer', 'require'], true)) {
+                throw new RuntimeException('Invalid PostgreSQL TLS configuration');
+            }
+
+            // PDO_PGSQL accepts sslmode in its DSN but does not accept
+            // channel_binding there. libpq reads PGCHANNELBINDING instead.
+            putenv('PGCHANNELBINDING=' . $channelBinding);
+
             $dsn = sprintf(
-                "%s:host=%s;port=%s;dbname=%s",
+                "%s:host=%s;port=%s;dbname=%s;sslmode=%s",
                 $_ENV['DB_DRIVER'],
                 $_ENV['DB_HOST'],
                 $_ENV['DB_PORT'],
-                $_ENV['DB_NAME']
+                $_ENV['DB_NAME'],
+                $sslMode
             );
 
             self::$instance = new PDO(
